@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// Create transporter without await (since it's not a promise)
 let transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: process.env.SMTP_PORT,
@@ -16,20 +15,13 @@ let transporter = nodemailer.createTransport({
   },
 });
 
-// console.log(process.env.SMTP_HOST);
-// console.log(process.env.SMTP_PORT);
-
-
-// Signup Controller
 export const signup = async (req, res, next) => {
-  const {username, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
-    // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create the new user
     const user = new User({
       username,
       email,
@@ -38,15 +30,12 @@ export const signup = async (req, res, next) => {
 
     await user.save();
 
-    // Generate JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
-    // Email verification link
     const verificationUrl = `http://localhost:5000/api/auth/verify/${token}`;
 
-    // Send the verification email
     const mailOptions = {
       from: process.env.SMTP_USER,
       to: email,
@@ -57,18 +46,15 @@ export const signup = async (req, res, next) => {
     let info = await transporter.sendMail(mailOptions);
     console.log("Message Sent: %s", info.messageId);
 
-    // Respond with success
     res.status(200).json({
       success: true,
       message: "Signup Successful. Please Verify your Email!",
     });
-
   } catch (error) {
-    next(error);  // Pass the error to the global error handler
+    next(error);
   }
 };
 
-// Verify Email Controller
 export const verifyEmail = async (req, res) => {
   try {
     const token = req.params.token;
@@ -83,7 +69,6 @@ export const verifyEmail = async (req, res) => {
       });
     }
 
-    // Mark the user as verified
     user.isVerified = true;
     await user.save();
 
@@ -91,7 +76,6 @@ export const verifyEmail = async (req, res) => {
       success: true,
       message: "Email Verified Successfully!",
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -100,7 +84,6 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
-// Login Controller
 export const login = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -132,20 +115,12 @@ export const login = async (req, res, next) => {
 
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-    const {password: pass, ...rest} = user._doc;
-    res.cookie('access_token', token, {httpOnly: true}).status(200).json(rest);
-
+    const { password: pass, ...rest } = user._doc;
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json(rest);
   } catch (error) {
     next(error);
   }
 };
-
-
-export const logout = async (req, res, next) => {
-  try {
-      res.clearCookie('access_token');
-      res.status(200).json('User has been Logged Out!')
-  } catch (error) {
-      next(error);
-  }
-}
