@@ -18,9 +18,10 @@ connectDB();
 app.use(express.json());
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://kodekalp-assignment-747k.onrender.com'],
     methods: 'GET,POST',
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }));
 
 app.use('/api/auth', authRoutes);
