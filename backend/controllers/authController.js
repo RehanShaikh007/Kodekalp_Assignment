@@ -22,7 +22,7 @@ let transporter = nodemailer.createTransport({
 
 // Signup Controller
 export const signup = async (req, res, next) => {
-  const { email, password } = req.body;
+  const {username, email, password } = req.body;
 
   try {
     // Hash the password
@@ -31,6 +31,7 @@ export const signup = async (req, res, next) => {
 
     // Create the new user
     const user = new User({
+      username,
       email,
       password: hashedPassword,
     });
@@ -138,3 +139,13 @@ export const login = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const logout = async (req, res, next) => {
+  try {
+      res.clearCookie('access_token');
+      res.status(200).json('User has been Logged Out!')
+  } catch (error) {
+      next(error);
+  }
+}
