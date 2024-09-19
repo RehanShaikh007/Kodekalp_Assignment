@@ -36,9 +36,11 @@ const Login = () => {
         return;
       }
 
-     
+      localStorage.setItem('token', data.token);
       toast.success("Login Successful!");
-      navigate('/'); 
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 3000);
 
     } catch (error) {
       toast.error("Login Failed! Please try again."+ error.message);

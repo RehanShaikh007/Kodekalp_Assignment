@@ -126,7 +126,7 @@ export const login = async (req, res, next) => {
     if (!user.isVerified) {
       return res.status(400).json({
         success: false,
-        message: "Please verify your email first",
+        message: "Please verify your Email First",
       });
     }
 

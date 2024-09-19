@@ -36,8 +36,10 @@ const Signup = () => {
         return;
       }
       
-      toast.success("Signup successful! Please check your email for verification."); 
-      navigate('/login');
+      toast.success("Signup successful! Please check your Email for verification."); 
+      setTimeout(() => {
+        navigate('/login');
+      }, 5000);
     } catch (error) {
       
       toast.error("Signup Failed: " + error.message); 

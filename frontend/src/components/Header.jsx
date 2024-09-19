@@ -1,8 +1,21 @@
 
-import { Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate} from "react-router-dom";
 
 
 const Header = () => {
+  
+  const navigate = useNavigate();
+
+ 
+  const handleLogout = () => {
+  
+    localStorage.removeItem('token');
+
+    
+    navigate('/login');
+  };
+
   
   return (
     <header className="bg-gradient-to-r from-gray-800 to-purple-700 shadow-md p-2">
@@ -28,6 +41,7 @@ const Header = () => {
               About
             </li>
           </Link>
+         
 
          
         </ul>
