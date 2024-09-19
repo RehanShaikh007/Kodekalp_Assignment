@@ -1,12 +1,14 @@
 import express from "express";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
-
+import path from "path";
 import cors from "cors";
 import dotenv from "dotenv";
 
 
 dotenv.config();
+
+const __dirname = path.resolve();
 
 const app = express();
 
@@ -29,3 +31,10 @@ app.listen(PORT, () => {
     console.log(`Server Running on Port ${PORT}`);
     
 });
+
+
+app.use(express.static(path.join(__dirname, '/frontend/dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+})
