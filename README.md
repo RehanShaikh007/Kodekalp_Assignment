@@ -7,11 +7,19 @@ The Kodekalp is a Full-stack web application built using the MERN stack (MongoDB
 ## Table of Contents
 
 - [Overview](#overview)
+- [Screenshots](#screenshots)
 - [Setup Instructions](#setup-instructions)
 - [How to Run the App Locally](#how-to-run-the-app-locally)
 - [System Overview](#system-overview)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Screenshots
+![Screenshot 2024-09-19 223325](https://github.com/user-attachments/assets/0b581afb-6a70-43b9-9492-a5ab876125d5)
+![Screenshot 2024-09-19 223435](https://github.com/user-attachments/assets/c3c00906-b010-4cee-8be2-466f54b9efc5)
+![Screenshot 2024-09-19 223544](https://github.com/user-attachments/assets/5932d667-b929-4b45-b5ad-8be67247a20c)
+![Screenshot 2024-09-19 223644](https://github.com/user-attachments/assets/5446fc18-25bf-4b0d-a02b-6d63d3c7780f)
+
 
 ## Setup Instructions
 
