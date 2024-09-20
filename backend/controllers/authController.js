@@ -34,7 +34,9 @@ export const signup = async (req, res, next) => {
       expiresIn: "1h",
     });
 
-    const verificationUrl = `http://localhost:5000/api/auth/verify/${token}`;
+    const baseUrl = process.env.BASE_URL || 'http://localhost:5000';
+
+    const verificationUrl = `${baseUrl}/api/auth/verify/${token}`;
 
     const mailOptions = {
       from: process.env.SMTP_USER,
